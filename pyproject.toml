@@ -2,10 +2,10 @@
 name = "coffeescript"
 version = "0.1.0"
 description = ""
-authors = ["Christian Ost <christian@christianost.de>"]
+authors = ["Christian Ost <hallo@christianost.de>"]
 
 [tool.poetry.dependencies]
-python = "^2.7"
+python = "^3.7.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
