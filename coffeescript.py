@@ -74,16 +74,18 @@ def calculate_brightness(image):
     return 1 if img_brightness == 255 else img_brightness / scale
 
 
-def map_path_to_analysed_img(input_folder, img_name, verbose):
+def map_path_to_analysed_img(input_folder, img_name, target_size, verbose):
     if verbose:
         print("\tprocessing {0}".format(img_name))
     else:
         print(".", end="", flush=True)
 
-    img = Image.open(path.join(input_folder, img_name))
+    img = get_cropped_image_to_centered_square(
+        Image.open(path.join(input_folder, img_name))
+    )
     return {
         "name": img_name,
-        "img": img,
+        "img": img.resize((target_size, target_size)),
         "data": {
             "brightness": calculate_brightness(img),
             "date_time": img.getexif()[36867]
@@ -98,9 +100,12 @@ def main(args):
 
     create_output_folder_if_not_exists(args.output)
 
-    print("-> loading input images and run basic analysis:")
+    img_size = int(args.size)
+    img_margin = int(args.margin)
+
+    print("-> load input images and run basic analysis:")
     input_image_files = list(map(
-        lambda img_path: map_path_to_analysed_img(args.input, img_path, args.verbose),
+        lambda img_path: map_path_to_analysed_img(args.input, img_path, img_size, args.verbose),
         get_image_files(args.input)
     ))
     print("\n")
@@ -116,8 +121,8 @@ def main(args):
         print("\tlayout of compilation (columns x rows): {0} x {1}\n".format(columns, rows))
 
     final_image_size = (
-        int(((args.size + args.margin) * columns) + args.margin),
-        int(((args.size + args.margin) * rows) + args.margin)
+        int(((img_size + img_margin) * columns) + img_margin),
+        int(((img_size + img_margin) * rows) + img_margin)
     )
 
     grid_position = (0, 0)
@@ -127,19 +132,18 @@ def main(args):
             print("\tprocessing {0}".format(img_with_data["name"]))
         else:
             print(".", end="", flush=True)
-        cropped_image = get_cropped_image_to_centered_square(img_with_data["img"]).resize((args.size, args.size))
-        final_image.paste(cropped_image, (
-            int(args.margin + grid_position[0] * (args.size + args.margin)),
-            int(args.margin + grid_position[1] * (args.size + args.margin))
+        final_image.paste(img_with_data["img"], (
+            int(img_margin + grid_position[0] * (img_size + img_margin)),
+            int(img_margin + grid_position[1] * (img_size + img_margin))
         ))
         grid_position = get_next_grid_position(grid_layout, grid_position)
 
         if args.thumb:
-            cropped_image.save(path.join(args.output, img_with_data["name"]), "JPEG")
+            img_with_data["img"].save(path.join(args.output, img_with_data["name"]), "JPEG")
 
     print("\n")
     print("-> save compilation image")
-    final_image.save(path.join(args.output, "compilation_{0}x{0}.jpg".format(args.size)), "JPEG")
+    final_image.save(path.join(args.output, "compilation_{0}x{0}.jpg".format(img_size)), "JPEG")
 
 
 if __name__ == "__main__":
