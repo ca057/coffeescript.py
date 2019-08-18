@@ -1,6 +1,6 @@
 # coffeescript.py
 
-Since begining 2019 I take a picture of every coffee I drunk. `coffeescript.py` is a small script which takes these pictures, crops them and creates a compilation out of it.
+Since begining 2019 I take a picture of every coffee I drink. `coffeescript.py` is a small script which takes these pictures, crops them and creates a compilation out of it.
 
 This compilation looks for 11th February to 11th August 2019 like this (sorted by date and time):
 
