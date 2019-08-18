@@ -6,7 +6,7 @@ This compilation looks for 11th February to 11th August 2019 like this (sorted b
 
 ![Compilation sorted by date and time](examples/compilation_date_time.jpg)
 
-In addition, the compilation can also be sorted by brightness of the cropped picture:
+In addition, the compilation can also be sorted by brightness of the cropped pictures:
 
 ![Compilation sorted by date and time](examples/compilation_brightness.jpg)
 
