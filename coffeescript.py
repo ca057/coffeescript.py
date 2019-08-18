@@ -101,7 +101,7 @@ def main(args):
     print("-> loading input images and run basic analysis:")
     input_image_files = list(map(
         lambda img_path: map_path_to_analysed_img(args.input, img_path, args.verbose),
-        get_image_files(args.input)[:3]
+        get_image_files(args.input)
     ))
     print("\n")
 
