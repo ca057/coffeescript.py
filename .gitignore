@@ -133,3 +133,4 @@ input
 output
 layouts
 compilation_*
+!examples/compilation_*
