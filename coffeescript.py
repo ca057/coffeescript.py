@@ -142,8 +142,9 @@ def main(args):
             img_with_data["img"].save(path.join(args.output, img_with_data["name"]), "JPEG")
 
     print("\n")
-    print("-> save compilation image")
-    final_image.save(path.join(args.output, "compilation_{0}x{0}.jpg".format(img_size)), "JPEG")
+    final_image_name = "compilation_{0}x{0}_{1}.jpg".format(img_size, args.key)
+    print("-> save compilation image to '{0}'".format(final_image_name))
+    final_image.save(path.join(args.output, final_image_name), "JPEG")
 
 
 if __name__ == "__main__":
