@@ -12,6 +12,7 @@ import math
 from os import path, listdir, makedirs
 from PIL import Image
 
+EXIF_CREATION_DATE_TIME = 36867
 
 def get_image_files(input_folder, file_endings=None):
     if file_endings is None:
@@ -94,7 +95,7 @@ def map_path_to_analysed_img(input_folder, img_name, target_size, verbose):
         "img": img.resize((target_size, target_size)),
         "data": {
             "brightness": calculate_brightness(img),
-            "date_time": img.getexif()[36867],
+            "date_time": img.getexif()[EXIF_CREATION_DATE_TIME],
         },
     }
 
